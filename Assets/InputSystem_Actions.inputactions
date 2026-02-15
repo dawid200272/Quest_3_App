@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -36,7 +37,6 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -986,6 +986,45 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AppControls",
+            "id": "98dbf7cb-40b7-4e52-9dc0-2a98966589ca",
+            "actions": [
+                {
+                    "name": "ToggleAppMode",
+                    "type": "Button",
+                    "id": "98f6c1c1-4532-49c6-889c-ca747f8e3b00",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a4a72fda-5ac6-4416-bb3a-43a8df0e8859",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
+                    "action": "ToggleAppMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b87e1bf-0f80-4a69-b187-48f16dcdc946",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
+                    "action": "ToggleAppMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
