@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - QDSUIBackplateGradient
+  - QDSUIPrimaryButton
+  - QDSUIAccentColor
+  - QDSUITextInvertedColor
+  - QDSUITextSecondaryInvertedColor
   layers:
   - Default
   - TransparentFX
@@ -11,7 +16,7 @@ TagManager:
   - HiddenMesh
   - Water
   - UI
-  - 
+  - Overlay UI
   - 
   - 
   - 
