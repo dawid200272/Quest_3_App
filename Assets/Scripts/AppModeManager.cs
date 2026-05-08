@@ -1,10 +1,11 @@
 using Meta.XR.MRUtilityKit;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AppModeManager : MonoBehaviour
 {
-	private enum AppMode
+	public enum AppMode
 	{
 		MixedReality,
 		VirtualReality,
@@ -15,8 +16,9 @@ public class AppModeManager : MonoBehaviour
 	private List<GameObject> _spawnedPrefabs = new();
 	private AppMode _mode;
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
+	public UnityEvent<AppMode> AppModeChanged;
+
+	private void Start()
     {
 	    if (prefabSpawner == null)
 	    {
@@ -26,7 +28,11 @@ public class AppModeManager : MonoBehaviour
 	    MRUK.Instance.RegisterSceneLoadedCallback(() =>
 	    {
 		    Debug.Log($"[{nameof(AppModeManager)}] Spawned prefabs count: " + prefabSpawner.AnchorPrefabSpawnerObjects.Count, this);
-	    });
+
+#if UNITY_ANDROID
+			CheckIfPassthroughIsRecommended();
+#endif
+		});
 
 		//   MRUK.Instance.RegisterSceneLoadedCallback(() =>
 		//   {
@@ -53,30 +59,34 @@ public class AppModeManager : MonoBehaviour
 
 	public void SwitchToVRMode()
 	{
-		//if (_mode == AppMode.VirtualReality)
-		//{
-		//	return;
-		//}
+		if (_mode == AppMode.VirtualReality)
+		{
+			return;
+		}
 
 		Debug.Log("Switching to VR Mode");
 
 		ShowSpawnedPrefabs();
 
 		_mode = AppMode.VirtualReality;
+
+		AppModeChanged?.Invoke(_mode);
 	}
 
 	public void SwitchToMRMode()
 	{
-		//if (_mode == AppMode.MixedReality)
-		//{
-		//	return;
-		//}
+		if (_mode == AppMode.MixedReality)
+		{
+			return;
+		}
 
 		Debug.Log("Switching to MR Mode");
 
 		HideSpawnedPrefabs();
 
 		_mode = AppMode.MixedReality;
+
+		AppModeChanged?.Invoke(_mode);
 	}
 
 	private void ShowSpawnedPrefabs()
@@ -114,6 +124,21 @@ public class AppModeManager : MonoBehaviour
 		}
 
 		Debug.Log("Spawned prefabs are now hidden");
+	}
+
+	/// <summary>
+	/// Checks if passthrough is recommended and toggles app mode repectively.
+	/// </summary>
+	private void CheckIfPassthroughIsRecommended()
+	{
+		if (OVRManager.IsPassthroughRecommended())
+		{
+			SwitchToMRMode();
+		}
+		else
+		{
+			SwitchToVRMode();
+		}
 	}
 
 	private void OnDestroy()

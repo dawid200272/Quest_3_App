@@ -1,48 +1,46 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 public class MenuUiScript : MonoBehaviour
 {
-	private GameObject menuUI;
+	[SerializeField] private GameObject menuUIPanel;
+	[SerializeField] private TextMeshProUGUI buttonText;
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
+	[SerializeField] private AppModeManager appManager;
+
+	private void Start()
 	{
-		menuUI = gameObject;
+		appManager.AppModeChanged.AddListener(OnAppModeChanged);
+
+		menuUIPanel.SetActive(false);
 	}
 
-	//// Update is called once per frame
-	//void Update()
-	//{
-
-	////}
-
-	//public void ToggleVisibility(bool? visible)
-	//{
-	//	if (menuUI == null)
-	//	{
-	//		return;
-	//	}
-
-	//	if (visible.HasValue)
-	//	{
-	//		menuUI.SetActive(visible.Value);
-	//	}
-	//	else
-	//	{
-	//		menuUI.SetActive(!menuUI.activeSelf);
-	//	}
-
-	//	Debug.Log($"[{nameof(MenuUiScript)}] Menu UI panel is active: {menuUI.activeSelf}");
-	//}
-	public void ToggleVisibility()
+	private void OnAppModeChanged(AppModeManager.AppMode appMode)
 	{
-		if (menuUI == null)
+		buttonText.text = appMode switch
+		{
+			AppModeManager.AppMode.MixedReality => "Switch to VR mode",
+			AppModeManager.AppMode.VirtualReality => "Switch to MR mode",
+			_ => throw new ArgumentOutOfRangeException(nameof(appMode), $"Not expected app mode value: {appMode}"),
+		};
+	}
+
+	public void TogglePanelVisibility()
+	{
+		if (menuUIPanel == null)
 		{
 			return;
 		}
 
-		menuUI.SetActive(!menuUI.activeSelf);
+		menuUIPanel.SetActive(!menuUIPanel.activeSelf);
 
-		Debug.Log($"[{nameof(MenuUiScript)}] Menu UI panel is active: {menuUI.activeSelf}");
+		Debug.Log($"[{nameof(MenuUiScript)}] Menu UI panel is "
+			+ (menuUIPanel.activeSelf ? "shown" : "hidden"));
+	}
+
+	private void OnDestroy()
+	{
+		appManager.AppModeChanged.RemoveListener(OnAppModeChanged);
 	}
 }
