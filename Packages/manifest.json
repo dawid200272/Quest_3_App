@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "com.meta.xr.sdk.all": "85.0.0",
-    "com.meta.xr.sdk.core": "83.0.0",
-    "com.meta.xr.sdk.interaction.ovr": "81.0.0",
+    "com.meta.xr.sdk.all": "201.0.0",
+    "com.meta.xr.sdk.core": "201.0.0",
+    "com.meta.xr.sdk.interaction.ovr": "201.0.0",
     "com.meta.xr.sdk.movement": "https://github.com/oculus-samples/Unity-Movement.git",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.collab-proxy": "2.11.3",
@@ -15,6 +15,7 @@
     "com.unity.timeline": "1.8.10",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.9",
+    "com.unity.xr.meta-openxr": "2.5.0",
     "com.unity.xr.openxr": "1.16.1",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
