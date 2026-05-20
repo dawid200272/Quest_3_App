@@ -1,4 +1,5 @@
 using Meta.XR.MRUtilityKit;
+using MRMotifs.PassthroughTransitioning;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,7 @@ public class AppModeManager : MonoBehaviour
 	}
 
 	[SerializeField] private AnchorPrefabSpawner prefabSpawner;
+	[SerializeField] private PassthroughFader passthroughFader;
 
 	private List<GameObject> _spawnedPrefabs = new();
 	private AppMode _mode;
@@ -25,13 +27,22 @@ public class AppModeManager : MonoBehaviour
 			return;
 	    }
 
-	    MRUK.Instance.RegisterSceneLoadedCallback(() =>
+		if (passthroughFader == null)
+		{
+			return;
+		}
+
+		MRUK.Instance.RegisterSceneLoadedCallback(() =>
 	    {
 		    Debug.Log($"[{nameof(AppModeManager)}] Spawned prefabs count: " + prefabSpawner.AnchorPrefabSpawnerObjects.Count, this);
 
-#if UNITY_ANDROID
-			CheckIfPassthroughIsRecommended();
-#endif
+			HideSpawnedPrefabs();
+
+			Debug.Log($"[{nameof(AppModeManager)}] App mode: {_mode}");
+
+			//#if UNITY_ANDROID
+			//			CheckIfPassthroughIsRecommended();
+			//#endif
 		});
 
 		//   MRUK.Instance.RegisterSceneLoadedCallback(() =>
@@ -91,12 +102,6 @@ public class AppModeManager : MonoBehaviour
 
 	private void ShowSpawnedPrefabs()
 	{
-		//foreach (var prefab in _spawnedPrefabs)
-		//{
-		//	Debug.Log($"Prefab: {prefab.name} is shown", prefab);
-
-		//	prefab.SetActive(true);
-		//}
 		foreach (var keyValuePair in prefabSpawner.AnchorPrefabSpawnerObjects)
 		{
 			Debug.Log($"[{nameof(AppModeManager)}] Prefab: {keyValuePair.Value.name} is shown", keyValuePair.Value);
@@ -109,13 +114,6 @@ public class AppModeManager : MonoBehaviour
 
 	private void HideSpawnedPrefabs()
 	{
-
-		//foreach (var prefab in _spawnedPrefabs)
-		//{
-		//	Debug.Log($"Prefab: {prefab.name} is hidden", prefab);
-
-		//	prefab.SetActive(false);
-		//}
 		foreach (var keyValuePair in prefabSpawner.AnchorPrefabSpawnerObjects)
 		{
 			Debug.Log($"[{nameof(AppModeManager)}] Prefab: {keyValuePair.Value.name} is hidden", keyValuePair.Value);
