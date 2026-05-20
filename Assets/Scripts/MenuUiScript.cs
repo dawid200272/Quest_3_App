@@ -10,6 +10,7 @@ public class MenuUiScript : MonoBehaviour
 	[SerializeField] private AppModeManager appManager;
 
 	[SerializeField] private GameObject objectSpawner;
+	[SerializeField] private GameObject hologramSpawner;
 
 	private void Start()
 	{
@@ -20,6 +21,11 @@ public class MenuUiScript : MonoBehaviour
 		if (objectSpawner == null)
 		{
 			Debug.LogWarning($"[{nameof(MenuUiScript)}] Object spawning mode can not be entered: {nameof(objectSpawner)} object is not provided to the script {nameof(MenuUiScript)}");
+		}
+
+		if (hologramSpawner == null)
+		{
+			Debug.LogWarning($"[{nameof(MenuUiScript)}] Hologram spawning mode can not be entered: {nameof(hologramSpawner)} object is not provided to the script {nameof(MenuUiScript)}");
 		}
 
 		buttonText.text = "Switch to VR mode";
@@ -56,6 +62,18 @@ public class MenuUiScript : MonoBehaviour
 		}
 
 		objectSpawner.SetActive(true);
+
+		menuUIPanel.SetActive(false);
+	}
+
+	public void EnterHologramSpawningMode()
+	{
+		if (hologramSpawner == null)
+		{
+			return;
+		}
+
+		hologramSpawner.SetActive(true);
 
 		menuUIPanel.SetActive(false);
 	}
