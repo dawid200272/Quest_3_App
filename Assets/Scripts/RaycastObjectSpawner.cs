@@ -28,15 +28,9 @@ public class RaycastObjectSpawner : MonoBehaviour
 			if (OVRInput.GetDown(button))
 			{
 				Instantiate(prefabToSpawn, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+
+				gameObject.SetActive(false);
 			}
-
-			//GameObject spawnedObject = Instantiate(prefabToSpawn);
-
-			//Vector3 hitPoint = hit.point;
-			//Vector3 hitNormal = hit.normal;
-
-			//spawnedObject.transform.position = hitPoint;
-			//spawnedObject.transform.rotation = Quaternion.LookRotation(-hitNormal);
 		}
 	}
 }
